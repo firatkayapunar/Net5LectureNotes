@@ -1,0 +1,23 @@
+﻿@model List<Product>
+
+<ul>
+    @foreach (var product in Model)
+    {
+        <li>@product.Name</li>
+    }
+
+    @foreach (var product in ViewBag.products as List<Product>)
+    {
+        <li>@product.Name</li>
+    }
+
+    @foreach (var product in ViewData["products"] as List<Product>)
+    {
+        <li>@product.Name</li>
+    }
+
+    @foreach (var product in TempData["products"] as List<Product>)
+    {
+        <li>@product.Name</li>
+    }
+</ul>

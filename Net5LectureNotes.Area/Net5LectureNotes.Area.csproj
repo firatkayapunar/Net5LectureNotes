@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.17" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Net5LectureNotes.ActionType\Net5LectureNotes.ActionType.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="Areas\AdministrationPanel\Models\" />
+		<Folder Include="Areas\AdministrationPanel\Views\" />
+	</ItemGroup>
+
+</Project>

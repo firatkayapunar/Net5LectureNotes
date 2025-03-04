@@ -1,0 +1,16 @@
+Net5LectureNotes.FirstStep
+Net5LectureNotes.ActionType
+Net5LectureNotes.DataTransportControl
+Net5LectureNotes.Razor
+Net5LectureNotes.Helper
+Net5LectureNotes.ModelBinding
+Net5LectureNotes.RetrievingDataFromUser
+Net5LectureNotes.Validation
+Net5LectureNotes.Layout
+Net5LectureNotes.ModularDesign
+Net5LectureNotes.Route
+Net5LectureNotes.Middleware
+Net5LectureNotes.DependencyInjection
+Net5LectureNotes.Area
+Net5LectureNotes.ViewModelAndDTO
+Net5LectureNotes.AppSettings

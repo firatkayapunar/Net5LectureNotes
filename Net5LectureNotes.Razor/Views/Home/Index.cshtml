@@ -1,0 +1,70 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+@* Razor Nedir?
+Asp.NET Core MVC mimarisinde .cshtml uzantılı dosyalarda HTML ile birlikte yazılan C# kodlarının server tarafında çalıştırılmasını sağlayan bir teknolojidir. 
+*@
+
+@* @ Operatörü: @ Operatörü, razor operatörüdür. *@
+
+<!-- YORUM SATIRI -->
+
+@* Razor ile Değişken Oluşturma *@
+@{
+    var number = 1.24;
+    var newNumber = Convert.ToInt16(number);
+}
+
+@* Razor ile Değişken Okuma *@
+@{
+    int numericValue = 5;
+    Console.WriteLine(numericValue);
+}
+
+@* Razor ile Parçalı Scope Yapısı *@
+@{
+    {
+        {
+            {
+                {
+                    {
+                    }
+                }
+            }
+        }
+    }
+}
+
+@* Razor İçerisinde HTML Kullanımı *@
+@{
+    <div><p>Merhaba</p></div>
+}
+
+@* Razor İle Tek Satırlık İşlemler *@
+@* Sayısal İşlemler *@
+
+<h3>@(5 + 4)</h3>
+<h3>@(3 % 5 == 3 ? "Evet" : "Hayır")</h3>
+<h3>@number</h3>
+<h3>@(number)</h3>
+
+@* Ternary Operatörü *@
+<h3>@(33 % 5 == 3 ? "Evet" : "Hayır")</h3>
+
+@* Koşul Yapıları *@
+@{
+    int num = 5;
+}
+
+@if (num == 5)
+{
+    <h3>Merhaba</h3>
+}
+else
+{ }

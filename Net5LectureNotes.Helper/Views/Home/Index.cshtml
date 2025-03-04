@@ -1,0 +1,41 @@
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+@Html.BeginForm("Index", "Product", FormMethod.Post)
+
+<form asp-action="Index" asp-controller="Product" method="post">
+    @Html.TextBox("txtName")
+    <input type="text" />
+    <select>
+        <option value="value">text</option>
+    </select>
+</form>
+
+<cache>
+    Cache : @DateTime.Now
+</cache>
+    Cache : @DateTime.Now
+
+@* 
+
+ IMAGE TAGHELPER
+ Tarayıcılar static dosyaları local cache üzerinde saklamaktadırlar.
+ Cachelenmiş bir dosya tekrar istenildiği taktirde bunun için server’a istek gönderilmez ve local cache üzerinden ilgili dosyanın cache’li hali gönderilir. Böylece sayfalar ilk açılışlarından sonraki taleplerde daha hızlı yüklenebilmektedirler.
+ Lakin bazen dosya adı değişmeden içeriği değişebilmektedir. Böyle bir durumda ilgili dosyanın cache'den değil, server'dan yüklenmesi gerekmektedir. Bu duruma biz ETag yöntemiyle müdahale edebilmekteyiz.
+ Asp.NET Core MVC mimarisinde TagHelper'lar içerisinde static dosyalara etag yöntemini uygulayabilir ve dosyanın adı değişmese içeriği değiştiği taktirde etag üzerinden bu değişikliği fark ederek ilgili dosyanın server’dan talep edileceği bilinebilmektedir.
+
+ <img src="~/resim.png" asp-append-version="true"/>
+
+*@
+
+@* <partial name="~/Views/Product/Partials/ListPartial.cshtml" /> *@
+@* Bu kod, ASP.NET Core MVC'de Partial View eklemek için kullanılan TagHelper yapısını gösteriyor. *@

@@ -1,0 +1,14 @@
+﻿@*
+ViewComponent için buradaki dizin mantığı korunmalıdır. Çünkü mimari yapıyı bu şekilde yorumluyor. Burada tek bir fark var. Controller bazında değil uygulama bazında bu mantığı oluşturduk. Çünkü her Controller için bu yapıyı kurmak yorucu olacaktır. Ama burada bir önemli nokta daha var. Bu tanımlamayı ya Controller bazında ya da Shared bazında yapmalıyız.
+*@
+
+@model List<string>
+
+<div class="carousel-inner">
+    @foreach (var img in Model)
+    {
+        <div class="carousel-item">
+            <img src="~/images/@img" height="400" class="d-block w-100" alt="...">
+        </div>
+    }
+</div>

@@ -1,0 +1,132 @@
+﻿{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "http://localhost:14950",
+      "sslPort": 44342
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Net5ApiWebLectureNotes.FirstStep": {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
+
+// *********************************************************************************************************
+
+// 1.Localhost Nedir ? 127.0.0.1’in Rolü
+
+// Localhost terimi, bir bilgisayarın kendi kendisiyle iletişim kurmak için kullandığı özel bir host adını ifade eder. İşletim sistemi düzeyinde tanımlanmıştır ve DNS çözümlemesi olmadan doğrudan 127.0.0.1 IP adresine yönlendirilir.
+
+// - Loopback Adresi: 127.0.0.1, bilgisayarın gerçek dış IP adresi değildir. Yalnızca cihaz içindeki iletişim için kullanılır.
+
+// - Hosts Dosyasında Tanımlı: Windows, Linux veya macOS gibi sistemlerde, hosts dosyasında genellikle şu satır yer alır => 127.0.0.1    localhost
+
+// Örneğin Windows’ta bu dosya (hosts), C:\Windows\System32\drivers\etc\hosts konumundadır. Böylece tarayıcı veya başka istemciler “localhost” adresine istek gönderdiklerinde, işletim sistemi bunu doğrudan 127.0.0.1 adresine yönlendirir.
+
+// Kısacası localhost, bilgisayarın dış dünyaya açılmadan, kendi içinde iletişimi mümkün kılan bir mekanizmadır.
+
+// *********************************************************************************************************
+
+// 2.Uygulama Başlatıldığında: Port ve Web Sunucusunun Yapılandırılması
+
+// Modern web uygulamaları; development, stage veya production ortamlarında önceden belirlenen portlar üzerinden dinleme yapacak şekilde ayarlanır. ASP.NET Core projelerinde bu iş Kestrel web sunucusu tarafından gerçekleştirilir. (IIS + Kestrel de bir seçenek (Özellikle production ortamı için))
+
+// a) Uygulamanın Çalıştırılması ve Kestrel Kullanımı ( IIS + Kestrel olmadan )
+// Kestrel, ASP.NET Core uygulamalarında kullanılan yüksek performanslı bir web sunucusudur. Uygulama başladığında, Kestrel belirli bir portu kullanmak istediğini işletim sistemine bildirir ve bu portu kendi kullanımına alır (bind eder). İşletim sistemi, tüm dinlenen portları ve bu portlara bağlı uygulamaları bir kayıt tablosu şeklinde tutar.
+
+// Örneğin:
+// Port 5001 → ASP.NET Core API (Kestrel veya IIS üzerinden)
+// Port 7000 → ASP.NET Core MVC Uygulaması (Kestrel veya IIS üzerinden)
+
+// İşletim sistemi, o port üzerinden gelen tüm TCP bağlantı isteklerini ilk olarak alır; ancak Kestrel bu porta bağlandığı için, gelen istekler otomatik olarak Kestrel’e yönlendirilir. Böylece, ilk aşamada işletim sistemi gelen TCP trafiğini kabul eder; ancak asıl HTTP isteklerini alıp işleyen taraf Kestrel’dir. Kestrel, bu TCP bağlantılarını HTTP protokolüne dönüştürür ve oluşturduğu HTTP isteklerini ASP.NET Core’un middleware pipeline’ına aktarır. Uygulamanın geri kalanında ise, bu middleware bileşenleri üzerinden istekler işlenir.
+
+// Basit Bir Benzetme:
+// Kestrel, hızlı ve çevik bir spor araba gibidir. Hızlıdır ama hava yastığı, ABS fren gibi ek güvenlik donanımları yoktur.
+// IIS ise, bu spor arabayı kullanmadan önce, onu koruyacak, trafik kurallarını denetleyecek ve tehlikeleri önleyecek bir güvenlik görevlisi gibidir.
+
+// Özetle:
+// Kestrel, uygulamanın iç mantığını çalıştırmak için hızlı ve etkili bir sunucudur. Ancak, internet gibi karmaşık ve tehlikeli bir ortamda tek başına güvenli ve yönetilebilir bir çözüm sunmaz. Bu yüzden IIS (veya başka bir reverse proxy) kullanarak, Kestrel’in üzerine ek güvenlik, yönetim ve kontrol katmanları eklenmiş olur. Böylece uygulamanız daha güvenli, stabil ve yönetilebilir hale gelir. (IIS + Kestrel)
+
+// b) Port Ayarlarının Yapılandırılması
+// Uygulamanın hangi URL’lerden ve portlardan erişilebilir olacağını belirlemek için launchSettings.json dosyası kullanılır. Bu dosya, projenin Properties klasörü içerisinde yer alır ve environment değişkenleri, uygulama URL’leri gibi ayarları içerir.
+
+// *********************************************************************************************************
+
+// 4. İstek Geldiğinde: İstemci ile Uygulama Arasındaki İletişim
+
+// Diyelim ki bir tarayıcı veya Postman gibi bir istemci aşağıdaki gibi bir istekte bulundu:
+
+// GET https://localhost:5001/api/products
+
+// Bu istemcinin localhost:5001 adresine bir HTTP isteği attığı anlamına gelir. İşte o sırada neler olur?
+
+// a) İstemciden Gelen İstek
+// Bağlantı İsteği: İstemci, 5001 portu üzerinden işletim sistemine bir TCP bağlantı isteği gönderir.
+// Port Kontrolü: İşletim sistemi, gelen isteğin hedef portunu kontrol eder ve bu portu dinleyen uygulamayı (örneğin Kestrel’i) belirler.
+
+// b) TCP Handshake Süreci
+// SYN: İstemci, bağlantı kurmak için bir SYN (synchronize) paketi gönderir.
+// SYN-ACK: İşletim sistemi, isteği dinleyen uygulamaya iletir ve uygulamadan gelen SYN-ACK paketi istemciye gönderilir.
+// ACK: İstemci, SYN-ACK paketini onaylayarak bağlantıyı kurar.
+
+// c) İşletim Sistemi → Web Sunucusu
+// Yönlendirme: İşletim sistemi, TCP bağlantısını ilgili web sunucusuna (örneğin Kestrel) yönlendirir.
+// İşlem Başlatma: Kestrel, işletim sistemi tarafından kabul edilen TCP bağlantısını kullanarak, gelen veriyi HTTP isteğine dönüştürür ve bu HTTP isteğini ASP.NET Core uygulamasının middleware pipeline’ına aktarır. (Kestrel Middleware Pipeline’ın başlatılmasını tetikler ama Middleware’leri yönetmez.)
+
+// d) Middleware ve Routing İşlemleri
+// Middleware Katmanları: Uygulama içerisinde hata yakalama, kimlik doğrulama, loglama gibi işlemleri gerçekleştiren katmanlar isteği işler.
+// Routing Mekanizması: İstek, doğru Controller veya Endpoint’e yönlendirilir.
+// İş Mantığı: Controller, iş mantığını uygular, veritabanı işlemlerini gerçekleştirir ve gerekli yanıtı oluşturur.
+
+// *********************************************************************************************************
+
+// 5. Yanıtın Dönüş Süreci: İstemciye Geri Bildirim
+
+// a) Yanıtın Oluşturulması ve İletilmesi
+
+// - Uygulama → Web Sunucusu: 
+// Controller tarafından oluşturulan yanıt (örneğin JSON, HTML, XML) web sunucusuna iletilir. Web sunucusu, HTTP başlıkları ve durum kodu (200, 404, 500 vb.) ile yanıtı hazırlar.
+
+// - Web Sunucusu (Kestrel) → İşletim Sistemi: 
+//   Kestrel, ASP.NET Core'dan gelen HTTP yanıtını alır, HTTP formatına uygun şekilde paketler ve TCP/IP paketlerine dönüştürür. 
+//   İşletim sistemi, bu TCP/IP paketlerini alarak ağ üzerinden istemciye gönderir.
+
+// - İşletim Sistemi → İstemci: 
+//   İstemci, gelen TCP/IP paketlerini alır, paketleri birleştirerek HTTP yanıtını oluşturur.
+//   HTTP başlıkları ve içeriği ayrıştırılarak kullanıcıya veya ilgili uygulamaya sunulur.
+
+// b) Örnek JSON Yanıtı
+// Aşağıda, tipik bir API yanıtı örneği verilmiştir:
+
+// [
+//  {
+//    "id": 1,
+//    "name": "Laptop",
+//    "price": 5000,
+//    "inStock": true
+//  },
+//  {
+//    "id": 2,
+//    "name": "Mouse",
+//    "price": 150,
+//    "inStock": true
+//  }
+// ]
+
+// Bu yanıt, istemci tarafından alındığında ilgili arayüzde işlenir ve kullanıcıya sunulur.

@@ -1,0 +1,19 @@
+﻿@{
+    var images = ViewData["Images"] as List<string>; // Güvenli dönüşüm
+}
+
+<div class="carousel-inner">
+    @if (images != null && images.Any()) // NULL kontrolü ekledik!
+    {
+        @foreach (var img in images)
+        {
+            <div class="carousel-item">
+                <img src="~/images/@img" height="400" class="d-block w-100" alt="...">
+            </div>
+        }
+    }
+    else
+    {
+        <p>Görüntülenecek resim bulunamadı.</p>
+    }
+</div>

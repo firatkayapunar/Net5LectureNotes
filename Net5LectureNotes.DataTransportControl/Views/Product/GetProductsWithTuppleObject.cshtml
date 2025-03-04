@@ -1,0 +1,16 @@
+﻿@* @model (Product,User) *@
+@model (Product product,User user)
+
+<h3>@Model.Item1.Quantity</h3>
+<h3>@Model.Item2.FirstName</h3>
+
+@* Post *@
+
+<form asp-action="CreateProduct" asp-controller="Product" method="post">
+    @* <input type="text" asp-for="Item1.Name" placeholder="Product Name" /> <br /> *@
+    <input type="text" asp-for="product.Name" placeholder="Product Name" /> <br />
+
+    @* <input type="text" asp-for="Item2.FirstName" placeholder="FirstName" /> <br /> *@
+    <input type="text" asp-for="user.FirstName" placeholder="FirstName" /> <br />
+    <button>Gönder</button>
+</form>

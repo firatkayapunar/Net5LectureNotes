@@ -1,0 +1,23 @@
+﻿@model CreateProduct
+
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+
+<div asp-validation-summary="All">
+    @* Aşağıdaki gibi span içerisinde belirtmeyip tüm hataları burada da toplayabiliriz. *@
+</div>
+
+<form asp-action="CreateProduct" asp-controller="Product" method="post">
+
+    <input type="text" asp-for="ProductName" placeholder="Product name" /><br />
+    <span asp-validation-for="ProductName"></span>
+
+    <input type="number" asp-for="Quantity" placeholder="Quantity" /><br />
+    <span asp-validation-for="Quantity"></span>
+
+    <input type="email" asp-for="EMail" placeholder="Email" /><br />
+    <span asp-validation-for="EMail"></span>
+
+    <button>Gönder</button>
+</form>

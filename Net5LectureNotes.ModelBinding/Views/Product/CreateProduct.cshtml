@@ -1,0 +1,15 @@
+﻿@model CreateProduct
+
+@* Bir web uygulamasında form tetiklendiğinde içerisindeki inputların değerleri hedef endpoint'e gönderilir. *@
+
+@*
+Form içerisindeki input nesneleri post edildiğinde bu nesnelere karşılık gelen propertyleri barındıran bir nesne ile otomatik olarak bind edilirler.
+*@
+
+<form asp-action="CreateProduct" asp-controller="Product" method="post">
+    <input type="text" asp-for=ProductName placeholder="Product Name" />
+    <br />
+    <input type="number" asp-for=Quantity placeholder="Quantity" />
+    <br />
+    <button>Ürün Ekle</button>
+</form>

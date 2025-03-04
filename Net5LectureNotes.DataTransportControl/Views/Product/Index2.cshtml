@@ -1,0 +1,6 @@
+﻿@model List<Product>
+
+@foreach (var product in ViewData["products"] as List<Product>)
+{
+    <li>@product.Name</li>
+}
